@@ -5,9 +5,10 @@ This is a simple **GTK-based system tray application** for controlling and monit
 It retrieves **fan speed, CPU temperature**, and allows for **fan level adjustments**.
 
 ## Features
-✅ Displays **fan speed, CPU temperature, and current fan level**  
+✅ Displays **fan speed, CPU temperature**, and current fan level  
 ✅ Integrates with the **system tray** using `libappindicator`  
 ✅ Reads data from `/proc/acpi/ibm/fan` (ThinkPad-specific ACPI interface)  
+✅ No longer requires `sudo` for fan control after proper setup  
 
 ---
 
@@ -35,6 +36,24 @@ If necessary, **enable auto-loading** at startup:
 echo "thinkpad_acpi" | sudo tee /etc/modules-load.d/thinkpad_acpi.conf
 ```
 
+### 🔑 Fixing Permissions for `/proc/acpi/ibm/fan`
+To allow the program to control fan speeds **without requiring sudo**, set proper permissions:
+
+```sh
+sudo groupadd thinkpad
+sudo chown :thinkpad /proc/acpi/ibm/fan
+sudo chmod 664 /proc/acpi/ibm/fan
+sudo usermod -aG thinkpad $USER
+```
+
+Make this permission persist across reboots:
+```sh
+echo 'f /proc/acpi/ibm/fan 0664 root thinkpad' | sudo tee /etc/tmpfiles.d/thinkpadfan.conf
+sudo systemd-tmpfiles --create
+```
+
+Reboot your system to apply the changes.
+
 ---
 
 ## 📥 Installation
@@ -47,13 +66,21 @@ cd thinkpadFanController
 
 ### 2️⃣ Compile the program:
 ```sh
+make clean
 make
 ```
 
-### 3️⃣ Run the application:
+### 3️⃣ Install the application system-wide:
 ```sh
-./thinkpadFanController
+sudo make install
 ```
+
+### 4️⃣ Run the application:
+```sh
+thinkpadFanController
+```
+
+✅ **No need for `sudo` if permissions were set correctly!**
 
 ---
 
@@ -73,7 +100,7 @@ sudo make uninstall
 ## 🚀 Usage
 Run the program from the terminal:
 ```sh
-./thinkpadFanController
+thinkpadFanController
 ```
 Or add it to your **startup applications** if using a window manager like **i3wm** or **LXQt**.
 
