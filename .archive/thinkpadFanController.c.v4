@@ -81,7 +81,7 @@ void update_status() {
 // Sets fan level
 void set_fan_level(const char *level) {
     char command[128];
-    snprintf(command, sizeof(command), "echo 'level %s' > /proc/acpi/ibm/fan", level);
+    snprintf(command, sizeof(command), "echo 'level %s' | sudo tee /proc/acpi/ibm/fan", level);
     system(command);
     update_status();
 }
