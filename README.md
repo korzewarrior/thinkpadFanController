@@ -1,71 +1,91 @@
-ThinkPad Fan Controller
+# ThinkPad Fan Controller
 
-Overview
+## Overview
+This is a simple **GTK-based system tray application** for controlling and monitoring the **fan speed on ThinkPad laptops**.  
+It retrieves **fan speed, CPU temperature**, and allows for **fan level adjustments**.
 
-This is a simple GTK-based system tray application for controlling and monitoring the fan speed on ThinkPad laptops. It retrieves fan speed, CPU temperature, and allows for fan level adjustments.
+## Features
+✅ Displays **fan speed, CPU temperature, and current fan level**  
+✅ Integrates with the **system tray** using `libappindicator`  
+✅ Reads data from `/proc/acpi/ibm/fan` (ThinkPad-specific ACPI interface)  
 
-Features
+---
 
-Displays fan speed, CPU temperature, and current fan level.
+## 🛠 Requirements
+This program is designed for **Linux systems**, specifically **Arch Linux** with **ThinkPad hardware**.  
+It may work on other distributions with minor adjustments.
 
-Integrates with the system tray using libappindicator.
+### 🔧 Dependencies
+Install the required dependencies using **pacman**:
 
-Reads data from /proc/acpi/ibm/fan (ThinkPad-specific ACPI interface).
-
-Requirements
-
-This program is designed for Linux systems, specifically Arch Linux with ThinkPad hardware. It may work on other distributions with minor adjustments.
-
-Dependencies
-
-Install the required dependencies using the package manager:
-
+```sh
 sudo pacman -S gtk3 libappindicator-gtk3 thinkfan acpi_call-dkms glibc
+```
 
-Additional Kernel Module
+### ⚙️ Additional Kernel Module
+Ensure the `thinkpad_acpi` kernel module is loaded:
 
-Ensure the thinkpad_acpi kernel module is loaded:
-
+```sh
 sudo modprobe thinkpad_acpi
+```
 
-If necessary, add it to /etc/modules-load.d/thinkpad_acpi.conf for auto-loading at startup.
+If necessary, **enable auto-loading** at startup:
 
-Installation
+```sh
+echo "thinkpad_acpi" | sudo tee /etc/modules-load.d/thinkpad_acpi.conf
+```
 
-Clone the repository:
+---
 
+## 📥 Installation
+
+### 1️⃣ Clone the repository:
+```sh
 git clone https://github.com/yourusername/thinkpad-fan-controller.git
 cd thinkpad-fan-controller
+```
 
-Compile the program:
-
+### 2️⃣ Compile the program:
+```sh
 make
+```
 
-Run the application:
-
+### 3️⃣ Run the application:
+```sh
 ./thinkpadFanController
+```
 
-Installation (System-wide)
+---
 
+## 🔧 System-wide Installation
 To install it as a system-wide application:
-
+```sh
 sudo make install
+```
 
 To remove it:
-
+```sh
 sudo make uninstall
+```
 
-Usage
+---
 
+## 🚀 Usage
 Run the program from the terminal:
-
+```sh
 ./thinkpadFanController
+```
+Or add it to your **startup applications** if using a window manager like **i3wm** or **LXQt**.
 
-Or add it to your startup applications if using a window manager like i3wm or LXQt.
+---
 
-License
+## 📜 License
+This project is licensed under the **MIT License**.  
+See the [`LICENSE`](./LICENSE) file for details.
 
-[Specify your preferred license, e.g., MIT, GPL, etc.]
+---
 
-Feel free to contribute to this project by submitting issues or pull requests on GitHub!
+## 🤝 Contributing
+Feel free to **submit issues** or **pull requests** on **GitHub**!  
 
+**⭐ If you find this useful, consider starring the repo!**  
