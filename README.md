@@ -42,7 +42,7 @@ echo "thinkpad_acpi" | sudo tee /etc/modules-load.d/thinkpad_acpi.conf
 ### 1️⃣ Clone the repository:
 ```sh
 git clone https://github.com/korzewarrior/thinkpadFanController.git
-cd thinkpad-fan-controller
+cd thinkpadFanController
 ```
 
 ### 2️⃣ Compile the program:
