@@ -2,10 +2,15 @@
 
 ## Overview
 This is a simple **GTK-based system tray application** for controlling and monitoring the **fan speed on ThinkPad laptops**.  
-It retrieves **fan speed, CPU temperature**, and allows for **fan level adjustments**.
+It retrieves **fan speed, CPU temperature**, and allows for **fan level adjustments** with real-time monitoring.
+
+![Screenshot of ThinkPad Fan Controller](screenshot.png)
+*You can replace this with your own screenshot by taking one and naming it 'screenshot.png'*
 
 ## Features
-✅ Displays **fan speed, CPU temperature**, and current fan level  
+✅ Displays **fan speed, CPU temperature, and CPU utilization**  
+✅ **Visual fan level indicator** with color-coded levels  
+✅ **Temperature and CPU usage history graph** for monitoring trends  
 ✅ Integrates with the **system tray** using `libappindicator`  
 ✅ Reads data from `/proc/acpi/ibm/fan` (ThinkPad-specific ACPI interface)  
 ✅ No longer requires `sudo` for fan control after proper setup  
@@ -103,6 +108,48 @@ Run the program from the terminal:
 thinkpadFanController
 ```
 Or add it to your **startup applications** if using a window manager like **i3wm** or **LXQt**.
+
+### Key Features
+- **Fan Level Control**: Set your fan speed to Auto, Low (1), Mid (3), High (5), Full (7), or Unlimited (Max)
+- **Visual Fan Indicator**: See your current fan level with an intuitive color-coded visualization
+- **CPU Monitoring**: Track both CPU temperature and utilization in real-time
+- **Temperature History**: Click "Show Graph" to view a history graph of temperature and CPU usage over time
+
+### 🚀 Using with Hyprland
+To use this application with Hyprland:
+
+1. Ensure your Hyprland configuration supports system tray applications.
+
+2. Add this application to your Hyprland autostart by editing your Hyprland config file (typically `~/.config/hypr/hyprland.conf`):
+
+```
+# Start ThinkPad Fan Controller
+exec-once = thinkpadFanController-hyprland.sh
+```
+
+3. Make sure you have a status bar that supports XDG system tray (like Waybar) and it's configured correctly:
+
+If using Waybar, make sure your Waybar config (typically `~/.config/waybar/config`) includes the "tray" module:
+
+```json
+{
+    "modules-right": ["tray", "clock", ...],
+    "tray": {
+        "icon-size": 21,
+        "spacing": 10
+    }
+}
+```
+
+4. If the tray icon doesn't appear, you may need to install `xdg-desktop-portal-wlr` and `xdg-desktop-portal-gtk`:
+
+```sh
+sudo pacman -S xdg-desktop-portal-wlr xdg-desktop-portal-gtk
+```
+
+5. The included `thinkpadFanController-hyprland.sh` script sets necessary environment variables for better compatibility with Hyprland. It's automatically installed by `make install`.
+
+6. If you're migrating from i3wm to Hyprland, make sure to remove any i3-specific autostart entries for thinkpadFanController and use the Hyprland approach described above.
 
 ---
 

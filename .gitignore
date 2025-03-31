@@ -1,4 +1,23 @@
+# Compiled binaries and object files
 thinkpadFanController
 *.o
-*.swp
+*.so
+*.a
+*.out
+
+# Editor files
+*~
+.*.swp
+.*.swo
+*.bak
+.vscode/
+.idea/
+
+# Build directories
+build/
+dist/
+
+# Misc
+.DS_Store
+.archive/
 
