@@ -435,6 +435,11 @@ gboolean refresh_status(gpointer data) {
     return TRUE;
 }
 
+// Set tooltips for fan level menu items
+void set_fan_level_tooltip(GtkWidget *widget, const char *level_name, const char *description) {
+    gtk_widget_set_tooltip_text(widget, description);
+}
+
 int main(int argc, char *argv[]) {
     gtk_init(&argc, &argv);
 
@@ -456,6 +461,7 @@ int main(int argc, char *argv[]) {
     fan_viz_item = gtk_menu_item_new();
     GtkWidget* drawing_area = create_fan_visualization(get_fan_level() + 11);
     gtk_container_add(GTK_CONTAINER(fan_viz_item), drawing_area);
+    gtk_widget_set_tooltip_text(fan_viz_item, "Fan level visualization - Color-coded from blue (low) to red (high)");
 
     GtkWidget *auto_item = gtk_menu_item_new_with_label("Auto");
     GtkWidget *level1_item = gtk_menu_item_new_with_label("Low (1)");
@@ -465,6 +471,15 @@ int main(int argc, char *argv[]) {
     GtkWidget *max_item = gtk_menu_item_new_with_label("Unlimited (Max)");
     GtkWidget *graph_item = gtk_menu_item_new_with_label("Show Graph");
     GtkWidget *exit_item = gtk_menu_item_new_with_label("Exit");
+    
+    // Set tooltips for fan level controls
+    set_fan_level_tooltip(auto_item, "Auto", "Automatic fan control by BIOS - Best for everyday use");
+    set_fan_level_tooltip(level1_item, "Low (1)", "Minimal fan speed - Quiet but limited cooling");
+    set_fan_level_tooltip(level3_item, "Mid (3)", "Medium fan speed - Balanced noise and cooling");
+    set_fan_level_tooltip(level5_item, "High (5)", "High fan speed - Good for intensive tasks");
+    set_fan_level_tooltip(level7_item, "Full (7)", "Maximum fan speed - Best for heavy workloads");
+    set_fan_level_tooltip(max_item, "Unlimited", "Fan unconstrained - May exceed normal operating limits, use with caution");
+    gtk_widget_set_tooltip_text(graph_item, "Show temperature and CPU usage history graph");
 
     // Connect signals
     g_signal_connect(auto_item, "activate", G_CALLBACK(on_fan_auto), NULL);

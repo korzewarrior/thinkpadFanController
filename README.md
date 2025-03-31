@@ -115,6 +115,21 @@ Or add it to your **startup applications** if using a window manager like **i3wm
 - **CPU Monitoring**: Track both CPU temperature and utilization in real-time
 - **Temperature History**: Click "Show Graph" to view a history graph of temperature and CPU usage over time
 
+### 🌡️ Fan Levels and Performance Impact
+
+Different fan levels have varying effects on system performance, noise, and battery life:
+
+| Fan Level | Noise Level | Cooling Efficiency | Battery Impact | Recommended Use Case |
+|-----------|-------------|-------------------|----------------|----------------------|
+| Auto      | Variable    | Adaptive          | Best           | Everyday use, balanced performance |
+| Low (1)   | Very quiet  | Minimal           | Good           | Light tasks, quiet environments |
+| Mid (3)   | Moderate    | Adequate          | Moderate       | Regular work, mild workloads |
+| High (5)  | Noticeable  | Good              | Higher         | Gaming, video editing, sustained loads |
+| Full (7)  | Loud        | Excellent         | High           | Heavy workloads, hot environments |
+| Max       | Very loud   | Maximum           | Highest        | Emergency cooling, extreme situations |
+
+**Note**: Higher fan speeds will consume more battery but will keep your CPU cooler, potentially allowing it to maintain higher performance for longer periods before thermal throttling occurs.
+
 ### 🚀 Using with Hyprland
 To use this application with Hyprland:
 
@@ -153,11 +168,38 @@ sudo pacman -S xdg-desktop-portal-wlr xdg-desktop-portal-gtk
 
 ---
 
+## 🔧 Troubleshooting
+
+### Common Issues
+
+#### Fan Control Not Working
+- **Issue**: Fan speed doesn't change when selecting different levels
+- **Solution**: 
+  - Check that the `thinkpad_acpi` module is loaded: `lsmod | grep thinkpad_acpi`
+  - Verify permissions on `/proc/acpi/ibm/fan` with `ls -l /proc/acpi/ibm/fan`
+  - Make sure your user is in the `thinkpad` group with `groups $USER`
+  - Some newer ThinkPad models may have different fan control interfaces
+
+#### Fan Control Permission Denied
+- **Issue**: "Permission denied" errors when changing fan levels
+- **Solution**: Follow the permission setup steps in the Requirements section
+
+#### Application Not Appearing in System Tray
+- **Issue**: Icon doesn't appear in your system tray
+- **Solution**:
+  - For Waybar: Ensure you have the "tray" module enabled in your Waybar config
+  - For other DEs/WMs: Make sure you have a system tray implementation running
+  - Try restarting your status bar after launching the application
+
+#### Compatibility
+This application is specifically designed for ThinkPad laptops and relies on ThinkPad-specific interfaces. It will not work on other laptop brands. It has been tested on various ThinkPad models including:
+- ThinkPad X series (X220, X230, X1 Carbon, etc.)
+- ThinkPad T series (T420, T430, T480, etc.)
+- ThinkPad L series and others with standard ThinkPad ACPI interfaces
+
 ## 📜 License
 This project is licensed under the **MIT License**.  
 See the [`LICENSE`](./LICENSE) file for details.
-
----
 
 ## 🤝 Contributing
 Feel free to **submit issues** or **pull requests** on **GitHub**!  
