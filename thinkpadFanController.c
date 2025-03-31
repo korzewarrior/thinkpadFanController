@@ -106,7 +106,7 @@ int main(int argc, char *argv[]) {
 
     AppIndicator *indicator = app_indicator_new(
         "thinkpad-fan-controller",
-        "utilities-terminal",
+        "thinkpad-fan-controller",
         APP_INDICATOR_CATEGORY_HARDWARE
     );
 

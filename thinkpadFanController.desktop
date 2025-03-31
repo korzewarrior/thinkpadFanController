@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=ThinkPad Fan Controller
+Comment=Control fan speed on ThinkPad laptops
+Exec=thinkpadFanController-hyprland.sh
+Icon=/usr/local/share/icons/hicolor/scalable/apps/thinkpad-fan-controller.png
+Terminal=false
+Categories=System;Utility;
+StartupNotify=true 
