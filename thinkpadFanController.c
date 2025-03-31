@@ -411,7 +411,22 @@ void update_status() {
 void set_fan_level(const char *level) {
     char command[128];
     snprintf(command, sizeof(command), "echo 'level %s' > /proc/acpi/ibm/fan", level);
-    system(command);
+    
+    // Execute command and check for errors
+    int result = system(command);
+    if (result != 0) {
+        fprintf(stderr, "Error setting fan level to %s. Make sure you have proper permissions.\n", level);
+        // Try to show an error dialog to the user
+        GtkWidget *dialog = gtk_message_dialog_new(NULL,
+                                                  GTK_DIALOG_MODAL,
+                                                  GTK_MESSAGE_ERROR,
+                                                  GTK_BUTTONS_OK,
+                                                  "Failed to set fan level to %s.\nCheck that you have proper permissions for /proc/acpi/ibm/fan.",
+                                                  level);
+        gtk_dialog_run(GTK_DIALOG(dialog));
+        gtk_widget_destroy(dialog);
+    }
+    
     update_status();
 }
 
@@ -441,6 +456,18 @@ void set_fan_level_tooltip(GtkWidget *widget, const char *level_name, const char
 }
 
 int main(int argc, char *argv[]) {
+    // Check if another instance is already running
+    FILE *fp = popen("pgrep -f \"^thinkpadFanController$\" | wc -l", "r");
+    if (fp != NULL) {
+        int count = 0;
+        if (fscanf(fp, "%d", &count) == 1 && count > 1) {
+            fprintf(stderr, "ThinkPad Fan Controller is already running.\n");
+            pclose(fp);
+            return 1;
+        }
+        pclose(fp);
+    }
+
     gtk_init(&argc, &argv);
 
     AppIndicator *indicator = app_indicator_new(
