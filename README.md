@@ -5,7 +5,6 @@ This is a simple **GTK-based system tray application** for controlling and monit
 It retrieves **fan speed, CPU temperature**, and allows for **fan level adjustments** with real-time monitoring.
 
 ![Screenshot of ThinkPad Fan Controller](screenshot.png)
-*You can replace this with your own screenshot by taking one and naming it 'screenshot.png'*
 
 ## Features
 ✅ Displays **fan speed, CPU temperature, and CPU utilization**  
